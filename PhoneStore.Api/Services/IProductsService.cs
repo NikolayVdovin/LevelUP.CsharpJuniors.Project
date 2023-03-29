@@ -4,7 +4,8 @@ namespace PhoneStore.Api.Services
 {
     public interface IProductsService
     {
-        IEnumerable<ProductItem> GetProducts();
-        IEnumerable<ProductItem> GetProductsById(Guid guid);
+        Task<IEnumerable<ProductItem>> GetProducts();
+        Task<ProductItem?> GetProductsById(Guid guid);
+        Task AddProduct(ProductItem productItem);
     }
 }
