@@ -7,12 +7,12 @@
 
 <h3>Добавление нового товара </h3>
 
-<Card>
-    <CardImage Style="max-height:400px; max-width:300px" Source="@($"/img/gallery/{Id.ToString().ToUpper()}.jpg")" Alt="Placeholder image"> </CardImage>
+<Card Style="max-width:500px">
+    <CardImage Style="max-height:300px; max-width:260px" Source="@($"/img/gallery/img_logo2.png")" Alt="Placeholder image"> </CardImage>
     <CardBody>
         <CardText>
             <Div>
-                Наименование: <TextEdit @bind-Text="_storeItemInfo.Name" />
+                Наименование: <TextEdit MaxLength="20" @bind-Text="_storeItemInfo.Name" />
             </Div>
             <Div>
                 Описание: <TextEdit @bind-Text="_storeItemInfo.Description" />
@@ -21,8 +21,8 @@
                 Цена: <TextEdit @bind-Text="_storeItemInfo.Price" />
             </Div>
         </CardText>
-        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="@CreateProduct">
-            Добавить <Icon Name="IconName.Save" />
+        <Button Color="Color.Primary" Outline Margin="Margin.Is2.FromTop" Clicked="@CreateProduct">
+            Добавить 
         </Button>
     </CardBody>
 </Card>

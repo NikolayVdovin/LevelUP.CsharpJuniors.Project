@@ -7,8 +7,12 @@
 
 <h3>Номенклатура</h3>
 <br>
-<Table>
-    <TableHeader ThemeContrast="ThemeContrast.Dark">
+<Button Color="Color.Primary" Outline Margin="Margin.Is2.FromTop" @onclick="AddNewProduct">Добавить продукт</Button>
+<br>
+<br>
+
+<Table Hoverable>
+    <TableHeader>
         <TableHeaderCell>Id</TableHeaderCell>
         <TableHeaderCell>Наименование</TableHeaderCell>
         <TableHeaderCell>Цена</TableHeaderCell>
@@ -35,5 +39,8 @@
         _items = await ProductsService.GetAllProducts();
     }
 
-
+    void AddNewProduct()
+    {
+        Navigation.NavigateTo("product/create");
+    }
 }

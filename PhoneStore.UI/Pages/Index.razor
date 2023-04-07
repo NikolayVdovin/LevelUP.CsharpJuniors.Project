@@ -2,8 +2,21 @@
 
 <PageTitle>Главная</PageTitle>
 
-<h1>Мы рады приветствовать Вас в нашем магазине</h1>
+<center><h1>Мы рады приветствовать Вас в нашем магазине смартфонов!</h1></center>
 
-Welcome to your new app.
+<Carousel @bind-SelectedSlide="@selectedSlide">
+    <CarouselSlide Name="1">
+        <Image Source="img/gallery/1.png" Text="Lights image" Display="Display.Block" Width="Width.Is100" />
+    </CarouselSlide>
+    <CarouselSlide Name="2">
+        <Image Source="img/gallery/2.jpg" Text="Keyboard image" Display="Display.Block" Width="Width.Is100" />
+    </CarouselSlide>
+    <CarouselSlide Name="3">
+        <Image Source="img/gallery/3.jpg" Text="Road image" Display="Display.Block" Width="Width.Is100" />
+    </CarouselSlide>
+</Carousel>
+@code {
+    private string selectedSlide = "2";
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+

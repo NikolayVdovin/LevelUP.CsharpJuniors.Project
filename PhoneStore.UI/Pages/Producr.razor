@@ -6,8 +6,8 @@
 
 @if (_storeItemInfo is not null)
 {
-    <Card>
-        <CardImage Style="max-height:400; max-width:300" Source="@($"/img/gallery/{Id.ToString().ToUpper()}.jpg")" Alt="Placeholder image"> </CardImage>
+    <Card Style="max-width:500px">
+        <CardImage Style="max-height:300px; max-width:260px" Source="@($"/img/gallery/img_logo2.png")" Alt="Placeholder image"> </CardImage>
         <CardBody>
             <CardText>
                 <Div>
@@ -20,11 +20,13 @@
                     Цена: <TextEdit @bind-Text = "_storeItemInfo.Price"/>
                 </Div>               
             </CardText>
-            <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="@SaveProduct">
-                Сохранить <Icon Name="IconName.Save"/>
-            </Button><Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="@DeleteProduct">
-                Удалить <Icon Name="IconName.Save"/>
-            </Button>
+            <Field Flex="Flex.JustifyContent.Between">
+                <Button Color="Color.Primary" Clicked="@SaveProduct">Сохранить</Button>
+            <Div>
+            <Button Color="Color.Danger" Clicked="@DeleteProduct">Удалить</Button>
+            </Div>
+            </Field>
+
         </CardBody>
     </Card>
 }
