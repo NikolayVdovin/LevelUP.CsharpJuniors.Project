@@ -7,5 +7,7 @@ namespace PhoneStore.Api.Services
         Task<IEnumerable<ProductItem>> GetProducts();
         Task<ProductItem?> GetProductsById(Guid guid);
         Task AddProduct(ProductItem productItem);
+        Task UpdateProduct(ProductItem productItem);
+        Task DeleteProduct(Guid id);
     }
 }

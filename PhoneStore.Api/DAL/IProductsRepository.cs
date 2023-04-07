@@ -6,7 +6,8 @@ namespace PhoneStore.Api.DAL
     {
         public Task<IEnumerable<ProductEntity>> GetAllProducts();
         public Task<ProductEntity?> GetById(Guid id);
-
         public Task Create(ProductEntity entity);
+        public Task Update(ProductEntity entity);
+        public Task Delete(Guid id);
     }
 }

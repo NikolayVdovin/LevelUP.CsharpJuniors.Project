@@ -9,11 +9,11 @@ using PhoneStore.Api.DAL;
 
 #nullable disable
 
-namespace PhoneStore.Api.DAL.Migrations
+namespace PhoneStore.Api.Migrations
 {
     [DbContext(typeof(ProductsDbContext))]
-    [Migration("20230329125152_AddProperty")]
-    partial class AddProperty
+    [Migration("20230331130644_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,14 @@ namespace PhoneStore.Api.DAL.Migrations
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("PhoneStore.Api.DAL.Entities.PropertyValue", b =>

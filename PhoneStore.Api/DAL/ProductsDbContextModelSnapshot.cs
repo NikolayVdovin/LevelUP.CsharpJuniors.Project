@@ -43,6 +43,9 @@ namespace PhoneStore.Api.DAL
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar");
 
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18, 2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");

@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace PhoneStore.Api.DAL.Migrations
+namespace PhoneStore.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDatabase : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

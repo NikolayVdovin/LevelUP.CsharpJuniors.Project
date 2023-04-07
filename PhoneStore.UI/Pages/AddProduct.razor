@@ -1,0 +1,41 @@
+﻿@page "/product/create"
+
+@using PhoneStore.UI.Models
+@using PhoneStore.UI.Services
+
+@inject IProductsServiceProxy Proxy
+
+<h3>Добавление нового товара </h3>
+
+<Card>
+    <CardImage Style="max-height:400px; max-width:300px" Source="@($"/img/gallery/{Id.ToString().ToUpper()}.jpg")" Alt="Placeholder image"> </CardImage>
+    <CardBody>
+        <CardText>
+            <Div>
+                Наименование: <TextEdit @bind-Text="_storeItemInfo.Name" />
+            </Div>
+            <Div>
+                Описание: <TextEdit @bind-Text="_storeItemInfo.Description" />
+            </Div>
+            <Div>
+                Цена: <TextEdit @bind-Text="_storeItemInfo.Price" />
+            </Div>
+        </CardText>
+        <Button Color="Color.Primary" Margin="Margin.Is2.FromTop" Clicked="@CreateProduct">
+            Добавить <Icon Name="IconName.Save" />
+        </Button>
+    </CardBody>
+</Card>
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private StoreItemInfo? _storeItemInfo = new StoreItemInfo("", "", "", "", "");
+
+    async Task CreateProduct()
+    {
+        var product = new ProductItem(Guid.NewGuid(), _storeItemInfo.Name, Guid.NewGuid(), Convert.ToDecimal(_storeItemInfo.Price), _storeItemInfo.Description);
+        await Proxy.CreateProduct(product);
+    }
+}

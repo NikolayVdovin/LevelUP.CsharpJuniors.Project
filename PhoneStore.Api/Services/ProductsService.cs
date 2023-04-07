@@ -20,7 +20,8 @@ namespace PhoneStore.Api.Services
                 Id = productItem.Id,
                 CategoryId = productItem.CategoryId,
                 Name = productItem.Name,
-                Description = productItem.Descriptions
+                Description = productItem.Description,
+                Price = productItem.Price
             };
 
             await _productsRepository.Create(productEntity);
@@ -35,11 +36,26 @@ namespace PhoneStore.Api.Services
         public async Task<ProductItem?> GetProductsById(Guid productId)
         {
             var productEntity = await _productsRepository.GetById(productId);
-            return productEntity == null ? null : new ProductItem(
-                productEntity.Id,
-                productEntity.Name,
-                productEntity.CategoryId,
-                productEntity.Description); /*ProductItem.FromEntity(productEntity);*/
+            return productEntity == null ? null : ProductItem.FromEntity(productEntity);
+        }
+
+        public async Task DeleteProduct(Guid id)
+        {
+            await _productsRepository.Delete(id);
+        }
+
+        public async Task UpdateProduct(ProductItem productItem)
+        {
+            var productEntity = new ProductEntity
+            {
+                Id = productItem.Id,
+                CategoryId = productItem.CategoryId,
+                Name = productItem.Name,
+                Description = productItem.Description,
+                Price = productItem.Price
+            };
+
+            await _productsRepository.Update(productEntity);
         }
     }
 }

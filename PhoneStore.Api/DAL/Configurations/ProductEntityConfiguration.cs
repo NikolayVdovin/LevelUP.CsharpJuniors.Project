@@ -27,6 +27,10 @@ namespace PhoneStore.Api.DAL.Configurations
                 .HasColumnType("uniqueidentifier");
 
             builder.HasIndex(e => e.CategoryId);
+
+            builder.Property(e => e.Price)
+                .IsRequired()
+                .HasColumnType("decimal(18, 2)");            
         }
     }
 }
