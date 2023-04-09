@@ -1,0 +1,68 @@
+﻿@page "/Product/{Id:guid}"
+@using PhoneStore.UI.Models
+@using PhoneStore.UI.Services
+
+@inject IProductsServiceProxy Proxy;
+
+@if (_storeItemInfo is not null)
+{
+    <Card Style="max-width:500px">
+        <CardImage Style="max-height:300px; max-width:260px" Source="@($"/img/gallery/img_logo2.png")" Alt="Placeholder image"> </CardImage>
+        <CardBody>
+            <CardText>
+                <Div>
+                    Наименование: <TextEdit @bind-Text = "_storeItemInfo.Name"/>
+                </Div> 
+                <Div>
+                    Описание: <TextEdit @bind-Text = "_storeItemInfo.Description"/>
+                </Div>
+                <Div>
+                    Цена: <TextEdit @bind-Text = "_storeItemInfo.Price"/>
+                </Div>               
+            </CardText>
+            <Field Flex="Flex.JustifyContent.Between">
+                <Button Color="Color.Primary" Clicked="@SaveProduct">Сохранить</Button>
+            <Div>
+            <Button Color="Color.Danger" Clicked="@DeleteProduct">Удалить</Button>
+            </Div>
+            </Field>
+
+        </CardBody>
+    </Card>
+}
+
+else
+{
+    <h3>Загружаем карточку смартфона...</h3>
+}
+
+@code {
+    private StoreItemInfo? _storeItemInfo;
+    private ProductItem? product;
+
+    [Parameter]
+    public Guid Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        product = await Proxy.GetProductById(Id);
+        _storeItemInfo = new StoreItemInfo("", "", "", "", "");
+        _storeItemInfo.Id = product.Id.ToString();
+        _storeItemInfo.Name = product.Name;
+        _storeItemInfo.CategoryId = product.CategoryId.ToString();
+        _storeItemInfo.Price = product.Price.ToString();
+        _storeItemInfo.Description = product.Description;
+    }
+
+    async Task SaveProduct()
+    {
+        product = new ProductItem(new Guid(_storeItemInfo.Id), _storeItemInfo.Name, new Guid(_storeItemInfo.CategoryId), Convert.ToDecimal(_storeItemInfo.Price), _storeItemInfo.Description);
+        await Proxy.UpdateProduct(product);
+        
+    }
+
+    async Task DeleteProduct()
+    {
+        await Proxy.DeleteProduct(Id);
+    }
+}

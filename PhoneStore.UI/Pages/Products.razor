@@ -1,0 +1,46 @@
+﻿@page "/products"
+@using PhoneStore.UI.Models;
+@using PhoneStore.UI.Services
+
+@inject IProductsServiceProxy ProductsService
+@inject NavigationManager Navigation
+
+<h3>Номенклатура</h3>
+<br>
+<Button Color="Color.Primary" Outline Margin="Margin.Is2.FromTop" @onclick="AddNewProduct">Добавить продукт</Button>
+<br>
+<br>
+
+<Table Hoverable>
+    <TableHeader>
+        <TableHeaderCell>Id</TableHeaderCell>
+        <TableHeaderCell>Наименование</TableHeaderCell>
+        <TableHeaderCell>Цена</TableHeaderCell>
+        <TableHeaderCell>Описание</TableHeaderCell>
+    </TableHeader>
+    <TableBody>
+        @foreach (var item in _items)
+        {
+            <TableRow DoubleClicked = "@(() => Navigation.NavigateTo ($"/product/{item.Id}"))">
+                <TableRowCell>@item.Id</TableRowCell>
+                <TableRowCell>@item.Name</TableRowCell>
+                <TableRowCell>@item.Price</TableRowCell>
+                <TableRowCell>@item.Description</TableRowCell>
+            </TableRow>
+        }
+    </TableBody>
+</Table>
+
+@code {
+    private IEnumerable<ProductItem> _items = Enumerable.Empty<ProductItem>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _items = await ProductsService.GetAllProducts();
+    }
+
+    void AddNewProduct()
+    {
+        Navigation.NavigateTo("product/create");
+    }
+}

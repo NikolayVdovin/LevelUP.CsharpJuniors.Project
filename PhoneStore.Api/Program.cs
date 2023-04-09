@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using PhoneStore.Api.DAL;
 using PhoneStore.Api.Services;
 
 namespace PhoneStore.Api
@@ -8,10 +10,19 @@ namespace PhoneStore.Api
         {
             var builder = WebApplication.CreateBuilder(args);           
 
-            builder.Services.AddControllers();         
+            builder.Services.AddControllers();
+            
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<IProductsService, ProductsService>();
+
+            var dbConnString = builder.Configuration.GetConnectionString("Products");
+
+            builder.Services.AddDbContext<ProductsDbContext>(options => options.UseSqlServer(dbConnString));
+            builder.Services.AddDbContext<UsersDbContext>();
+            builder.Services.AddScoped<IProductsRepository, ProductsRepository>();
+            builder.Services.AddScoped<IProductsService, ProductsService>();
+            builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+            builder.Services.AddScoped<IUsersService, UsersService>();
 
             var app = builder.Build();
 

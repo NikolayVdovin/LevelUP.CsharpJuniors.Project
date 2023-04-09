@@ -5,7 +5,7 @@ using PhoneStore.Api.Services;
 namespace PhoneStore.Api.Controllers
 {
     [ApiController]
-    [Route ("[controller]")]
+    [Route ("products")]
     public sealed class ProductsController : ControllerBase
     {
         private IProductsService _productsService;
@@ -16,17 +16,38 @@ namespace PhoneStore.Api.Controllers
         }
 
         [HttpGet("all")]
-        public ActionResult<IEnumerable<ProductItem>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProductItem>>> GetProducts()
         {
-            var products = _productsService.GetProducts();
+            var products = await _productsService.GetProducts();
             return Ok(products);
         }
 
-        [HttpGet("by Id")]
-        public ActionResult<IEnumerable<ProductItem>> GetProductsById(Guid guid) 
+        [HttpGet("{productId}")]
+        public async Task<ActionResult<ProductItem>> GetProductsById(Guid productId) 
         {
-            var products = _productsService.GetProductsById(guid);
-            return Ok(products);
+            var products =  await _productsService.GetProductsById(productId);
+            return products == null ? NotFound("Нет смартфона с таким ID") : Ok(products);
+        }
+
+        [HttpPost("add")]
+        public async Task<IActionResult> AddProduct(ProductItem productItem)
+        {
+            await _productsService.AddProduct(productItem);
+            return Ok();
+        }
+
+        [HttpPut("update")]
+        public async Task<ActionResult> UpdateProduct(ProductItem product)
+        {
+            await _productsService.UpdateProduct(product);
+            return Ok(product);
+        }
+
+        [HttpDelete("delete")]
+        public async Task<ActionResult> DeleteProduct(Guid id)
+        {
+            await _productsService.DeleteProduct(id);
+            return Ok();
         }
     }
 }
